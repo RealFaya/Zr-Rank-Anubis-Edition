@@ -8,7 +8,7 @@
 * Sorry for my English.
 
 * Author Hallucinogenic Troll, Anubis Edition
-* Version = 1.7-A, Anubis Edition
+* Version = 1.7-B, Anubis Edition.
 
 ### Decription:Zr-Rank-Anubis-Edition
 
@@ -40,16 +40,16 @@
 * zr_rank_roundwin_zombie - How many points you get by winning a round as a zombie.
 * zr_rank_roundwin_human - How many points you get by winning a round as an human.
 * zr_rank_inactive_days - How many days a player needs to be inactive and deleted from the database (0 will disable it).
-* zr_rank_defenders_enabled - Plugin is enabled or disabled.", _, true, 0.0, true, 1.0);
-* zr_rank_defenders_top_list - How many players will be listed on the top list. (1.0-20.0).
-* zr_rank_defenders_minium_damage - The total minimum damage for players to be listed. (1.0-5000.0).
+* zr_rank_defenders_enabled - Plugin is enabled or disabled.
+* zr_rank_defenders_top_list - How many players will be listed on the top list.
+* zr_rank_defenders_minium_damage - The total minimum damage for players to be listed.
 * zr_rank_defenders_save_enabled - Save Top 1 from turning zombie.
 * zr_rank_defenders_sound_enabled - Save sound enabled or disabled.
 * zr_rank_defenders_hudsave_position - The X and Y position for the HudSave.
 * zr_rank_defenders_hudtop_position - The X and Y position for the HudTop.
-* zr_rank_defenders_myhudtop_position - The X and Y position for the MyHudTop.
 * zr_rank_defenders_hud_colors - RGB color value for the hud.
 * zr_rank_defenders_sound - Saved from becoming a zombie,Sound.
+* zr_rank_top1_points - How many points do you earn when and the Top 1 of the Round (0 will disable it).
 
 ### Commands
 

@@ -291,48 +291,35 @@
 	
 	"top_header"
 	{
-		"en"		"{lightred}=========={default}  ZR RANK DEFENDERS  {lightred}=========="
+		"en"		"{lightred}========={default}  RANK TOP DEFENDERS  {lightred}========="
+		"pt"		"{lightred}========={default}  RANK TOP DEFENSORES  {lightred}========="
 	}
 	
 	"top_winner"
 	{
-		"#format"	"{1:s},{2:N},{3:s}"
-		"en"		"{green}{1}.{darkred} {2}: {3} DMG"
+		"#format"	"{1:i},{2:N},{3:i}"
+		"en"		"{green}{1}.{darkred} {2} {darkred}- {green}{3} {darkred}DMG"
+		"pt"		"{green}{1}.{darkred} {2} {darkred}- {green}{3} {darkred}DMG"
 	}
 	
 	"top_nonwinner"
 	{
-		"#format"	"{1:s},{2:N},{3:s}"
-		"en"		"{darkblue}{1}.{lime} {2}: {3} DMG"
+		"#format"	"{1:i},{2:N},{3:i}"
+		"en"		"{darkblue}{1}.{lime} {2} {darkred}- {green}{3} {darkred}DMG"
+		"pt"		"{darkblue}{1}.{lime} {2} {darkred}- {green}{3} {darkred}DMG"
 	}
 	
 	"top_footer"
 	{
-		"en"		"{lightred}==================================="
+		"en"		"{lightred}========================================"
+		"pt"		"{lightred}========================================"
 	}
-	
-	"tophud_header"
+
+	"You Points"
 	{
-		"en"		"***  ZR RANK DEFENDERS  ***"
-	}
-	
-	"tophud_winner"
-	{
-		"#format"	"{1:s},{2:N},{3:s}"
-		"en"		"{1}. {2}: {3} DMG"
-	}
-	
-	"tophud_nonwinner"
-	{
-		"#format"	"{1:s},{2:N},{3:s}"
-		"en"		"{1}. {2}: {3} DMG"
-	}
-	
-	"tophud_mypoints"
-	{
-		"#format"	"{1:s}"
-		"en"		"Damage you caused {1} DMG"
-		"pt"		"Danos que você causou nesta rodada {1} DMG"
+		"#format"	"{1:N},{2:i}"
+		"en"		"You Damge {1} - {2} DMG."
+		"pt"		"Danos que você causou {1} - {2} DMG."
 	}
 	
 	"You haven t done any damage"
@@ -352,5 +339,12 @@
 		"#format"	"{1:N}"
 		"en"		"{green}{1}{default} was saved from becoming a zombie by being Top 1 in Top Defender."
 		"pt"		"{green}{1}{default} foi salvo de virar zumbi por ser o Top 1 no Top Defender."
+	}
+
+	"Top One Point"
+		{
+		"#format"	"{1:d}"
+		"en"		"You have earned {1} points for being Top One in this round!"
+		"pt"		"Você Ganhou {1} pontos por ser Top One desta rodada!"
 	}
 }

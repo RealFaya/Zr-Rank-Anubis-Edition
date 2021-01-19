@@ -96,7 +96,7 @@ public Action Event_PlayerHurt(Event event, const char[] name, bool dontBroadcas
 		}
 		if(g_ZR_Rank_Defenders_Enabled)
 		{
-			damangeArray[attacker].damange += damage;
+			Top_Rank_Dmg[attacker] += damage;
 		}
 	}
 	

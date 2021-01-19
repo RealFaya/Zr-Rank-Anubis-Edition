@@ -40,7 +40,7 @@ public Plugin myinfo =
 	name = "[ZR] Rank",
 	author = "Hallucinogenic Troll, Anubis Edition",
 	description = "Rank Specified for Zombie Reloaded or Zombie Plague Servers",
-	version = "1.7-A, Anubis Edition",
+	version = "1.7-B, Anubis Edition",
 	url = "http://HallucinogenicTrollConfigs.com/"
 };
 
@@ -70,15 +70,15 @@ public void OnPluginStart()
 	g_CVAR_ZR_Rank_RoundWin_Human = CreateConVar("zr_rank_roundwin_human", "1", "How many points you get by winning a round as an human", _, true, 0.0, false);
 	g_CVAR_ZR_Rank_Inactive_Days = CreateConVar("zr_rank_inactive_days", "30", "How many days a player needs to be inactive and deleted from the database (0 will disable it)", _, true, 0.0, false);
 	g_CVAR_ZR_Rank_Defenders_Enabled = CreateConVar("zr_rank_defenders_enabled", "1.0", "Plugin is enabled or disabled.", _, true, 0.0, true, 1.0);
-	g_CVAR_ZR_Rank_Defenders_Top_List = CreateConVar("zr_rank_defenders_top_list", "5.0", "How many players will be listed on the top list. (1.0-20.0)", _, true, 1.0, true, 64.0);
+	g_CVAR_ZR_Rank_Defenders_Top_List = CreateConVar("zr_rank_defenders_top_list", "5.0", "How many players will be listed on the top list. (1.0-5.0)", _, true, 1.0, true, 5.0);
 	g_CVAR_ZR_Rank_Minium_Damage = CreateConVar("zr_rank_defenders_minium_damage", "500.0", "The total minimum damage for players to be listed. (1.0-5000.0)", _, true, 1.0, true, 5000.0);
 	g_CVAR_ZR_Rank_Defenders_Save_Enable = CreateConVar("zr_rank_defenders_save_enabled", "1.0", "Save Top 1 from turning zombie.", _, true, 0.0, true, 1.0);
 	g_CVAR_ZR_Rank_Defenders_Sound_Enable = CreateConVar("zr_rank_defenders_sound_enabled", "1.0", "Save sound enabled or disabled.", _, true, 0.0, true, 1.0);
 	g_CVAR_ZR_Rank_HudSave_Position = CreateConVar("zr_rank_defenders_hudsave_position", "-1.0 0.150", "The X and Y position for the HudSave.");
 	g_CVAR_ZR_Rank_HudTop_Position = CreateConVar("zr_rank_defenders_hudtop_position", "-1.0 0.775", "The X and Y position for the HudTop.");
-	g_CVAR_ZR_Rank_MyHudTop_Position = CreateConVar("zr_rank_defenders_myhudtop_position", "-1.0 0.900", "The X and Y position for the MyHudTop.");
 	g_CVAR_ZR_Rank_Hud_Colors = CreateConVar("zr_rank_defenders_hud_colors", "255 255 0", "RGB color value for the hud.");
 	g_CVAR_ZR_Rank_Defenders_Sound  = CreateConVar("zr_rank_defenders_sound", "top/bells.mp3", "Saved from becoming a zombie,Sound.");
+	g_CVAR_ZR_Rank_Top1_Point = CreateConVar("zr_rank_top1_points", "10", "How many points do you earn when and the Top 1 of the Round (0 will disable it) ", _, true, 0.0, false);
 	
 	// Events
 	HookEvent("player_hurt", Event_PlayerHurt, EventHookMode_Pre);
@@ -109,10 +109,6 @@ public void OnPluginStart()
 	// Let's iniciate to 0, just to be sure;
 	g_ZR_Rank_NumPlayers = 0;
 	
-	hHudText1 = CreateHudSynchronizer();
-	hHudText2 = CreateHudSynchronizer();
-	hHudText3 = CreateHudSynchronizer();
-	
 	for (int i = 1; i <= MaxClients; i++)
 	{
 		if (IsClientInGame(i))
@@ -120,7 +116,6 @@ public void OnPluginStart()
 			OnClientPostAdminCheck(i);
 		}
 	}
-
 }
 
 public void OnAllPluginsLoaded()
@@ -148,11 +143,8 @@ public void OnConfigsExecuted()
 {
 	char Zr_StringPosA[2][8];
 	char Zr_StringPosB[2][8];
-	char Zr_StringPosC[2][8];
 	char Zr_PosValueA[16];
 	char Zr_PosValueB[16];
-	char Zr_PosValueC[16];
-	char Zr_ColorValue[64];
 
 	g_CVAR_ZR_Rank_Prefix.GetString(g_ZR_Rank_Prefix, sizeof(g_ZR_Rank_Prefix));
 	g_ZR_Rank_InfectHuman = g_CVAR_ZR_Rank_InfectHuman.IntValue;
@@ -178,24 +170,20 @@ public void OnConfigsExecuted()
 	g_ZR_Rank_Minium_Damage = g_CVAR_ZR_Rank_Minium_Damage.IntValue;
 	g_ZR_Rank_Defenders_Save_Enable = g_CVAR_ZR_Rank_Defenders_Save_Enable.BoolValue;
 	g_ZR_Rank_Defenders_Sound_Enable = g_CVAR_ZR_Rank_Defenders_Sound_Enable.BoolValue;
+	g_ZR_Rank_Top1_Point = g_CVAR_ZR_Rank_Top1_Point.IntValue;
 	g_CVAR_ZR_Rank_HudSave_Position.GetString(Zr_PosValueA, sizeof(Zr_PosValueA));
 	g_CVAR_ZR_Rank_HudTop_Position.GetString(Zr_PosValueB, sizeof(Zr_PosValueB));
-	g_CVAR_ZR_Rank_MyHudTop_Position.GetString(Zr_PosValueC, sizeof(Zr_PosValueC));
 
 	ExplodeString(Zr_PosValueA, " ", Zr_StringPosA, sizeof(Zr_StringPosA), sizeof(Zr_StringPosA[]));
 	ExplodeString(Zr_PosValueB, " ", Zr_StringPosB, sizeof(Zr_StringPosB), sizeof(Zr_StringPosB[]));
-	ExplodeString(Zr_PosValueC, " ", Zr_StringPosC, sizeof(Zr_StringPosC), sizeof(Zr_StringPosC[]));
+	
+	Format(HudSavePosX, sizeof(HudSavePosX), Zr_StringPosA[0]);
+	Format(HudSavePosY, sizeof(HudSavePosY), Zr_StringPosA[1]);
 
-	HudSavePos[0] = StringToFloat(Zr_StringPosA[0]);
-	HudSavePos[1] = StringToFloat(Zr_StringPosA[1]);
-	HudTopPos[0] = StringToFloat(Zr_StringPosB[0]);
-	HudTopPos[1] = StringToFloat(Zr_StringPosB[1]);
-	MyHudTopPos[0] = StringToFloat(Zr_StringPosC[0]);
-	MyHudTopPos[1] = StringToFloat(Zr_StringPosC[1]);
+	Format(HudTopPosX, sizeof(HudTopPosX), Zr_StringPosB[0]);
+	Format(HudTopPosY, sizeof(HudTopPosY), Zr_StringPosB[1]);
 
 	g_CVAR_ZR_Rank_Hud_Colors.GetString(Zr_ColorValue, sizeof(Zr_ColorValue));
-
-	ColorStringToArray(Zr_ColorValue, ZrankHudColor);
 
 	if(g_ZR_Rank_Defenders_Sound_Enable)
 	{
@@ -205,16 +193,6 @@ public void OnConfigsExecuted()
 		Format(buffer, sizeof(buffer), "sound/%s", g_ZR_Rank_Save_Sound);
 		AddFileToDownloadsTable(buffer);
 	}
-}
-
-public void ColorStringToArray(const char[] zrsColorString, int zraColor[3])
-{
-	char zrasColors[4][4];
-	ExplodeString(zrsColorString, " ", zrasColors, sizeof(zrasColors), sizeof(zrasColors[]));
-
-	zraColor[0] = StringToInt(zrasColors[0]);
-	zraColor[1] = StringToInt(zrasColors[1]);
-	zraColor[2] = StringToInt(zrasColors[2]);
 }
 
 public void OnClientPostAdminCheck(int client)

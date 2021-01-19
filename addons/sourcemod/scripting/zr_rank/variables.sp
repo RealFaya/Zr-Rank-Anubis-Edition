@@ -27,9 +27,9 @@ ConVar g_CVAR_ZR_Rank_Defenders_Save_Enable;
 ConVar g_CVAR_ZR_Rank_Defenders_Sound_Enable;
 ConVar g_CVAR_ZR_Rank_HudSave_Position;
 ConVar g_CVAR_ZR_Rank_HudTop_Position;
-ConVar g_CVAR_ZR_Rank_MyHudTop_Position;
 ConVar g_CVAR_ZR_Rank_Hud_Colors;
 ConVar g_CVAR_ZR_Rank_Defenders_Sound;
+ConVar g_CVAR_ZR_Rank_Top1_Point;
 
 
 // Booleans for Optional Libraries
@@ -56,8 +56,9 @@ int g_ZR_Rank_Suicide;
 int g_ZR_Rank_RoundWin_Zombie;
 int g_ZR_Rank_RoundWin_Human;
 int g_ZR_Rank_Inactive_Days;
-int g_ZR_Rank_Defenders_Top_List;
 int g_ZR_Rank_Minium_Damage;
+int g_ZR_Rank_Top1_Point;
+int g_ZR_Rank_Defenders_Top_List;
 
 bool g_ZR_Rank_PostInfect;
 bool g_ZR_Rank_Defenders_Enabled;
@@ -86,18 +87,20 @@ enum struct player_damange {
 // Top Defender
 #define MAX_FILE_LEN 80
 char g_ZR_Rank_Save_Sound[MAX_FILE_LEN];
-Handle hHudText1;
-Handle hHudText2;
-Handle hHudText3;
+
 bool ClientImune[MAXPLAYERS+1]={false,...};
 bool ClientImuneTemp[MAXPLAYERS+1]={false,...};
-int ZrankHudColor[3];
-float HudSavePos[2];
-float HudTopPos[2];
-float MyHudTopPos[2];
 
-player_damange damangeArray [MAXPLAYERS+1];
-player_damange tempArray[5];
+
+char Zr_ColorValue[64];
+char HudTopPosX[8];
+char HudTopPosY[8];
+char HudSavePosX[8];
+char HudSavePosY[8];
+
+int Top_Rank_Dmg[MAXPLAYERS+1];
+
+
 
 // Check if it is MySQL that you set on the databases.cfg
 bool IsMySql;
