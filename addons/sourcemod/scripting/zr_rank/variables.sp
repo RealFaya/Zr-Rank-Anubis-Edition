@@ -25,6 +25,7 @@ ConVar g_CVAR_ZR_Rank_Defenders_Top_List;
 ConVar g_CVAR_ZR_Rank_Minium_Damage;
 ConVar g_CVAR_ZR_Rank_Defenders_Save_Enable;
 ConVar g_CVAR_ZR_Rank_Defenders_Sound_Enable;
+ConVar g_CVAR_ZR_Rank_Defenders_Hud_Enabled;
 ConVar g_CVAR_ZR_Rank_HudSave_Position;
 ConVar g_CVAR_ZR_Rank_HudTop_Position;
 ConVar g_CVAR_ZR_Rank_Hud_Colors;
@@ -62,6 +63,7 @@ int g_ZR_Rank_Defenders_Top_List;
 
 bool g_ZR_Rank_PostInfect;
 bool g_ZR_Rank_Defenders_Enabled;
+bool g_ZR_Rank_Defenders_Hud_Enabled;
 bool g_ZR_Rank_Defenders_Save_Enable;
 bool g_ZR_Rank_Defenders_Sound_Enable;
 

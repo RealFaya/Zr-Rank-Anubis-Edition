@@ -69,11 +69,12 @@ public void OnPluginStart()
 	g_CVAR_ZR_Rank_RoundWin_Zombie = CreateConVar("zr_rank_roundwin_zombie", "1", "How many points you get by winning a round as a zombie", _, true, 0.0, false);
 	g_CVAR_ZR_Rank_RoundWin_Human = CreateConVar("zr_rank_roundwin_human", "1", "How many points you get by winning a round as an human", _, true, 0.0, false);
 	g_CVAR_ZR_Rank_Inactive_Days = CreateConVar("zr_rank_inactive_days", "30", "How many days a player needs to be inactive and deleted from the database (0 will disable it)", _, true, 0.0, false);
-	g_CVAR_ZR_Rank_Defenders_Enabled = CreateConVar("zr_rank_defenders_enabled", "1.0", "Plugin is enabled or disabled.", _, true, 0.0, true, 1.0);
+	g_CVAR_ZR_Rank_Defenders_Enabled = CreateConVar("zr_rank_defenders_enabled", "1", "Top Defender is enabled or disabled.(0 will disable it)");
 	g_CVAR_ZR_Rank_Defenders_Top_List = CreateConVar("zr_rank_defenders_top_list", "5.0", "How many players will be listed on the top list. (1.0-5.0)", _, true, 1.0, true, 5.0);
 	g_CVAR_ZR_Rank_Minium_Damage = CreateConVar("zr_rank_defenders_minium_damage", "500.0", "The total minimum damage for players to be listed. (1.0-5000.0)", _, true, 1.0, true, 5000.0);
-	g_CVAR_ZR_Rank_Defenders_Save_Enable = CreateConVar("zr_rank_defenders_save_enabled", "1.0", "Save Top 1 from turning zombie.", _, true, 0.0, true, 1.0);
-	g_CVAR_ZR_Rank_Defenders_Sound_Enable = CreateConVar("zr_rank_defenders_sound_enabled", "1.0", "Save sound enabled or disabled.", _, true, 0.0, true, 1.0);
+	g_CVAR_ZR_Rank_Defenders_Save_Enable = CreateConVar("zr_rank_defenders_save_enabled", "1", "Save Top 1 from turning zombie. (0 will disable it)");
+	g_CVAR_ZR_Rank_Defenders_Sound_Enable = CreateConVar("zr_rank_defenders_sound_enabled", "1", "Save sound enabled or disabled.(0 will disable it)");
+	g_CVAR_ZR_Rank_Defenders_Hud_Enabled = CreateConVar("zr_rank_defenders_hud_enabled", "1", "Top Defender is enabled or disabled Hud.(0 will disable it)");
 	g_CVAR_ZR_Rank_HudSave_Position = CreateConVar("zr_rank_defenders_hudsave_position", "-1.0 0.150", "The X and Y position for the HudSave.");
 	g_CVAR_ZR_Rank_HudTop_Position = CreateConVar("zr_rank_defenders_hudtop_position", "-1.0 0.775", "The X and Y position for the HudTop.");
 	g_CVAR_ZR_Rank_Hud_Colors = CreateConVar("zr_rank_defenders_hud_colors", "255 255 0", "RGB color value for the hud.");
@@ -170,6 +171,7 @@ public void OnConfigsExecuted()
 	g_ZR_Rank_Minium_Damage = g_CVAR_ZR_Rank_Minium_Damage.IntValue;
 	g_ZR_Rank_Defenders_Save_Enable = g_CVAR_ZR_Rank_Defenders_Save_Enable.BoolValue;
 	g_ZR_Rank_Defenders_Sound_Enable = g_CVAR_ZR_Rank_Defenders_Sound_Enable.BoolValue;
+	g_ZR_Rank_Defenders_Hud_Enabled = g_CVAR_ZR_Rank_Defenders_Hud_Enabled.BoolValue;
 	g_ZR_Rank_Top1_Point = g_CVAR_ZR_Rank_Top1_Point.IntValue;
 	g_CVAR_ZR_Rank_HudSave_Position.GetString(Zr_PosValueA, sizeof(Zr_PosValueA));
 	g_CVAR_ZR_Rank_HudTop_Position.GetString(Zr_PosValueB, sizeof(Zr_PosValueB));
@@ -193,29 +195,28 @@ public void OnConfigsExecuted()
 		Format(buffer, sizeof(buffer), "sound/%s", g_ZR_Rank_Save_Sound);
 		AddFileToDownloadsTable(buffer);
 	}
+
+	g_ZR_Rank_NumPlayers = 0;
 }
 
 public void OnClientPostAdminCheck(int client)
 {
+	g_ZR_Rank_NumPlayers++;
 	g_ZR_Rank_Points[client] = g_ZR_Rank_StartPoints;
 	g_ZR_Rank_ZombieKills[client] = 0;
 	g_ZR_Rank_HumanInfects[client] = 0;
 	g_ZR_Rank_RoundWins_Zombie[client] = 0;
 	g_ZR_Rank_RoundWins_Human[client] = 0;
 	Top_Defenders_OnClientConnect_Post(client);
-	LoadPlayerInfo(client);
-}
-
-public void OnClientConnected(int client)
-{
-	g_ZR_Rank_NumPlayers++;
 
 	if(g_ZR_Rank_NumPlayers == g_ZR_Rank_MinPlayers)
 	{
 		CPrintToChatAll("%s %t", g_ZR_Rank_Prefix, "Currently Min Players", g_ZR_Rank_MinPlayers);
 	}
-	CPrintToChatAll("Clientes %s players de %s min players", g_ZR_Rank_NumPlayers, g_ZR_Rank_MinPlayers);
+
+	LoadPlayerInfo(client);
 }
+
 public void OnClientDisconnect(int client)
 {
 	Top_Defenders_OnClientDisconnect_Post(client);

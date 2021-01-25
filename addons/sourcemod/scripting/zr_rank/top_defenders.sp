@@ -99,7 +99,7 @@ public void Top_Defenders_Event_RoundEnd()
 			if (client == 0)
 				return;
 
-			if(IsClientInGame(client) && !IsFakeClient(client))
+			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
 			{
 				SetGlobalTransTarget(client);
 				if (Top_Rank_Dmg[client] >= 1)
@@ -137,7 +137,7 @@ public void Top_Defenders_Event_RoundEnd()
 			if (client == 0)
 				return;
 
-			if(IsClientInGame(client) && !IsFakeClient(client))
+			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
 			{
 				SetGlobalTransTarget(client);
 				if (Top_Rank_Dmg[client] >= 1)
@@ -174,7 +174,7 @@ public void Top_Defenders_Event_RoundEnd()
 			if (client == 0)
 				return;
 
-			if(IsClientInGame(client) && !IsFakeClient(client))
+			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
 			{
 				SetGlobalTransTarget(client);
 				if (Top_Rank_Dmg[client] >= 1)
@@ -210,7 +210,7 @@ public void Top_Defenders_Event_RoundEnd()
 			if (client == 0)
 				return;
 
-			if(IsClientInGame(client) && !IsFakeClient(client))
+			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
 			{
 				SetGlobalTransTarget(client);
 				if (Top_Rank_Dmg[client] >= 1)
@@ -245,7 +245,7 @@ public void Top_Defenders_Event_RoundEnd()
 			if (client == 0)
 				return;
 
-			if(IsClientInGame(client) && !IsFakeClient(client))
+			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
 			{
 				SetGlobalTransTarget(client);
 				if (Top_Rank_Dmg[client] >= 1)
