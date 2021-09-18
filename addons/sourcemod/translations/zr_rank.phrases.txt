@@ -3,12 +3,14 @@
 	"Reset All"
 	{
 		"en"	"Database has been reseted successfully!"
+		"ru"	"База данных успешно обновлена!"
 		"pt"	"A base de dados foi apagada com sucesso!"
 	}
 
 	"Warmup End"
 	{
 		"en"	"Rank will be enabled after Warmup!"
+		"ru"	"Ранги будут задействованы после разминки"
 		"pt"	"O rank será ativado após o aquecimento terminar!"
 	}
 
@@ -16,6 +18,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"You won {1} point(s) by stabbing a zombie with mouse left button!"
+		"ru"		"Вы заработали {1} очка (ов), ударив зомби левой кнопкой мыши!"
 		"pt"		"Ganhaste {1} ponto(s) por chinar um zombie com o lado esquerdo do rato!"
 	}
 
@@ -23,6 +26,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"You won {1} point(s) by stabbing a zombie with mouse right button!"
+		"ru"		"Вы заработали {1} очка (ов), ударив зомби правой кнопкой мыши!"
 		"pt"		"Ganhaste {1} ponto(s) por chinar um zombie com o lado direito do rato!"
 	}
 
@@ -30,6 +34,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"You won {1} point(s) by killing a zombie with a knife!"
+		"ru"		"Вы заработали {1} очка (ов), убив зомби ножом!"
 		"pt"		"Ganhaste {1} ponto(s) por matar um zombie com a faca!"
 	}
 
@@ -37,6 +42,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"You won {1} point(s) by killing a zombie with a HE grenade!"
+		"ru"		"Вы заработали {1} очка (ов), убив зомби разрывной гранатой!"
 		"pt"		"Ganhaste {1} ponto(s) por matar um zombie com uma granada HE!"
 	}
 
@@ -44,6 +50,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"You won {1} point(s) by killing a zombie with a smoke grenade!"
+		"ru"		"Вы заработали {1} очка (ов), убив зомби дымовой гранатой!"
 		"pt"		"Ganhaste {1} ponto(s) por matar um zombie com uma granada de fumo!"
 	}
 
@@ -51,6 +58,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"You won {1} point(s) by killing a zombie with a flashbang!"
+		"ru"		"Вы заработали {1} очка (ов), убив зомби с помощью световой гранаты!"
 		"pt"		"Ganhaste {1} ponto(s) por matar um zombie com uma flashbang!"
 	}
 
@@ -58,6 +66,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"You won {1} point(s) by killing a zombie with a decoy grenade!"
+		"ru"		"Вы заработали {1} очка (ов), убив зомби с помощью гранаты-ловушки!"
 		"pt"		"Ganhaste {1} ponto(s) por matar um zombie com uma decoy!"
 	}
 
@@ -65,6 +74,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"You won {1} point(s) by killing a zombie with an headshot!"
+		"ru"		"Вы заработали {1} очка (ов), убив зомби выстрелом в голову!"
 		"pt"		"Ganhaste {1} ponto(s) por matar um zombie com um tiro na cabeça!"
 	}
 
@@ -72,6 +82,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"You won {1} point(s) by killing a zombie!"
+		"ru"		"Вы заработали {1} очка (ов), убив зомби!"
 		"pt"		"Ganhaste {1} ponto(s) por matar um zombie!"
 	}
 
@@ -79,6 +90,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"You lost {1} point(s) for being killed by an human!"
+		"ru"		"Вы потеряли {1} очка (ов) за то, что были убиты человеком!"
 		"pt"		"Perdeste {1} ponto(s) por teres sido morto por um humano!"
 	}
 
@@ -86,6 +98,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"You won {1} point(s) by infecting an human!"
+		"ru"		"Вы заработали {1} очка (ов), заразив человека!"
 		"pt"		"Ganhaste {1} ponto(s) por infetares um humano!"
 	}
 
@@ -93,12 +106,14 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"You lost {1} point(s) for being infected by an human!"
+		"ru"		"Вы потеряли {1} очка (ов) за заражение!"
 		"pt"		"Perdeste {1} ponto(s) por teres sido infetado por um humano!"
 	}
 
 	"Top Order By Points"
 	{
 		"en"	"[ZR] Rank Top (Order by Points)"
+		"ru"	"[ZR] Наивысший ранг (сортировка по очкам)"
 		"pt"	"[ZR] Rank Top (Ordenado por Pontos)"
 	}
 
@@ -106,12 +121,14 @@
 	{
 		"#format"	"{1:s},{2:d}"
 		"en"		"{1} - {2} Point(s)"
+		"ru"		"{1} - {2} очка (ов)"
 		"pt"		"{1} - {2} Ponto(s)"
 	}
 
 	"Top Order By Zombie Kills"
 	{
 		"en"	"[ZR] Rank Top (Order by Zombie Kills)"
+		"ru"	"[ZR] Наивысший ранг (сортировка по убийствам зомби)"
 		"pt"	"[ZR] Rank Top (Ordenado por Zombies Mortos)"
 	}
 
@@ -119,12 +136,14 @@
 	{
 		"#format"	"{1:s},{2:d}"
 		"en"		"{1} - {2} Zombie Kill(s)"
+		"ru"		"{1} - {2} Убийства зомби"
 		"pt"		"{1} - {2} Zombie(s) Morto(s)"
 	}
 
 	"Top Order By Human Infects"
 	{
 		"en"	"[ZR] Rank Top (Order by Infected Humans)"
+		"ru"	"[ZR] Наивысший ранг (сортировка по инфицированным людям)"
 		"pt"	"[ZR] Rank Top (Ordenado por Humanos Infetados)"
 	}
 
@@ -132,6 +151,7 @@
 	{
 		"#format"	"{1:s},{2:d}"
 		"en"		"{1} - {2} Human(s) Infected"
+		"ru"		"{1} - {2} человек(-а) инфицированы"
 		"pt"		"{1} - {2} Humano(s) Infetado(s)"
 	}
 
@@ -139,6 +159,7 @@
 	{
 		"#format" 	"{1:d},{2:d},{3:d},{4:d},{5:d}"
 		"en"		"You are in {1}/{2}, with {3} points, {4} humans infected and {5} zombies killed!"
+		"ru"		"Вы находитесь в {1} / {2}, с {3} очками, {4} зараженниями и {5} убитыми зомби!"
 		"pt"		"Estás em {1}/{2}, com {3} pontos, {4} humanos infetados e {5} zombies mortos!"
 	}
 
@@ -146,6 +167,7 @@
 	{
 		"#format"	"{1:d}"
 		"en" 		"You can't show more than {1} players on top!"
+		"ru"		"Вы не можете видеть более {1} игрока в таблице!"
 		"pt"		"Não podes ver mais de {1} jogadores de uma vez!"
 	}
 
@@ -153,6 +175,7 @@
 	{
 		"#format"	"{1:d}"
 		"en" 		"You lost {1} point(s) by suiciding!"
+		"ru"		"Вы потеряли {1} очка (ов) из-за самоубийства!"
 		"pt"		"Perdeste {1} ponto(s) por te  suicidares!"
 	}
 
@@ -160,6 +183,7 @@
 	{
 		"#format"	"{1:d}"
 		"en" 		"You won {1} point(s) by winning the round as a zombie!"
+		"ru"		"Вы заработали {1} очка (ов), выиграв раунд как зомби!"
 		"pt"		"Ganhaste {1} ponto(s) por ganhares a ronda, sendo um zombie!"
 	}
 
@@ -167,12 +191,14 @@
 	{
 		"#format"	"{1:d}"
 		"en" 		"You won {1} point(s) by winning the round as an human!"
+		"ru"		"Вы заработали {1} очка (ов), выиграв раунд как человек!"
 		"pt"		"Ganhaste {1} ponto(s) por ganhares a ronda, sendo um humano!"
 	}
 
 	"Top Order By Round Wins Human"
 	{
 		"en"	"[ZR] Rank Top (Order by Round Wins as Human)"
+		"ru"	"[ZR] Наивысший ранг (Порядок побед в раунде как человек)"
 		"pt"	"[ZR] Rank Top (Ordenado por Rondas Ganhas como Humano)"
 	}
 
@@ -180,12 +206,14 @@
 	{
 		"#format"	"{1:s},{2:d}"
 		"en"		"{1} - {2} Win(s)"
+		"ru"		"{1} - {2} выигрыша (ов)"
 		"pt"		"{1} - {2} Vitória(s)"
 	}
 
 	"Top Order By Round Wins Zombie"
 	{
 		"en"	"[ZR] Rank Top (Order by Round Wins as Zombie)"
+		"ru"	"[ZR] ВНаивысший ранг (Порядок побед в раунде как зомби)"
 		"pt"	"[ZR] Rank Top (Ordenado por Rondas Ganhas como Zombie)"
 	}
 
@@ -193,36 +221,42 @@
 	{
 		"#format"	"{1:s},{2:d}"
 		"en"		"{1} - {2} Win(s)"
+		"ru"		"{1} - {2} выигрыша (ов)"
 		"pt"		"{1} - {2} Vitória(s)"
 	}
 	
 	"Want to Reset Data"
 	{
 		"en"	"Do you really want to reset your rank?"
+		"ru"	"Вы действительно хотите сбросить свой ранг?"
 		"pt"	"Queres mesmo reiniciar o teu rank?"
 	}
 	
 	"Yes"
 	{
 		"en"	"Yes"
+		"ru"	"Да"
 		"pt"	"Sim"
 	}
 
 	"No"
 	{
 		"en"	"No"
+		"ru"	"Нет"
 		"pt"	"Não"
 	}
 	
 	"Your Rank Reset"
 	{
 		"en"	"Your rank has been reseted successfully!"
+		"ru"	"Ваш ранг был успешно сброшен!"
 		"pt"	"O teu rank foi reiniciado com sucesso!"
 	}
 	
 	"Player Stats"
 	{
 		"en"	"Your Rank Stats"
+		"ru"	"Статистика вашего рейтинга"
 		"pt"	"As tuas estatísticas do Rank"
 	}
 	
@@ -230,6 +264,7 @@
 	{
 		"#format"	"{1:s}"
 		"en"		"Name: {1}"
+		"ru"		"Имя: {1}"
 		"pt"		"Nome: {1}"
 	}
 	
@@ -237,6 +272,7 @@
 	{
 		"#format"	"{1:s}"
 		"en"		"SteamID: {1}"
+		"ru"		"SteamID: {1}"
 		"pt"		"SteamID: {1}"
 	}
 	
@@ -244,6 +280,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"Points: {1}"
+		"ru"		"Очков: {1}"
 		"pt"		"Pontos: {1}"
 	}
 	
@@ -251,6 +288,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"Zombies Killed: {1}"
+		"ru"		"Зомби убито: {1}"
 		"pt"		"Zombies Mortos: {1}"
 	}
 	
@@ -258,6 +296,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"Humans Infected: {1}"
+		"ru"		"Зараженных людей: {1}"
 		"pt"		"Humanos Infetados: {1}"
 	}
 	
@@ -265,6 +304,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"Rounds Won as a Zombie: {1}"
+		"ru"		"Выиграно раундов как зомби: {1}"
 		"pt"		"Rondas Ganhas a Zombie: {1}"
 	}
 	
@@ -272,6 +312,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"Rounds Won as an Human: {1}"
+		"ru"		"Выиграно раундов как человек: {1}"
 		"pt"		"Rondas Ganhas a Humano: {1}"
 	}
 	
@@ -279,6 +320,7 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"Now there's {1} players in the server! Rank is now enabled!"
+		"ru"		"Теперь на сервере {1} игроков! Ранг теперь включен!"
 		"pt"		"Agora existem {1} jogadores dentro do servidor! O Rank foi ativado!"
 	}
 	
@@ -286,12 +328,14 @@
 	{
 		"#format"	"{1:d}"
 		"en"		"Now there's less than {1} players in the server! Rank is now disabled!"
+		"ru"		"Теперь на сервере меньше {1} игроков! Ранг отключен!"
 		"pt"		"Agora existem menos de {1} jogadores dentro do servidor! O Rank foi desativado!"
 	}
 	
 	"top_header"
 	{
 		"en"		"{lightred}========={default}  RANK TOP DEFENDERS  {lightred}========="
+		"ru"		"{lightred}========={default}  RANK TOP DEFENDERS  {lightred}========="
 		"pt"		"{lightred}========={default}  RANK TOP DEFENSORES  {lightred}========="
 	}
 	
@@ -299,6 +343,7 @@
 	{
 		"#format"	"{1:i},{2:N},{3:i}"
 		"en"		"{green}{1}.{darkred} {2} {darkred}- {green}{3} {darkred}DMG"
+		"ru"		"{green}{1}.{darkred} {2} {darkred}- {green}{3} {darkred}DMG"
 		"pt"		"{green}{1}.{darkred} {2} {darkred}- {green}{3} {darkred}DMG"
 	}
 	
@@ -306,12 +351,14 @@
 	{
 		"#format"	"{1:i},{2:N},{3:i}"
 		"en"		"{darkblue}{1}.{lime} {2} {darkred}- {green}{3} {darkred}DMG"
+		"ru"		"{darkblue}{1}.{lime} {2} {darkred}- {green}{3} {darkred}DMG"
 		"pt"		"{darkblue}{1}.{lime} {2} {darkred}- {green}{3} {darkred}DMG"
 	}
 	
 	"top_footer"
 	{
 		"en"		"{lightred}========================================"
+		"ru"		"{lightred}========================================"
 		"pt"		"{lightred}========================================"
 	}
 
@@ -319,18 +366,21 @@
 	{
 		"#format"	"{1:N},{2:i}"
 		"en"		"You Damge {1} - {2} DMG."
+		"ru"		"Вы наносите урон {1} - {2} DMG"
 		"pt"		"Danos que você causou {1} - {2} DMG."
 	}
 	
 	"You haven t done any damage"
 	{
 		"en"		"You haven't done any damage to the zombies this round."
+		"ru"		"В этом раунде вы не нанесли никакого вреда зомби"
 		"pt"		"Você não causou danos aos zumbis nesta rodada."
 	}
 	
 	"You were saved"
 	{
 		"en"		"You were saved from becoming a zombie by being Top 1 in Top Defender."
+		"ru"		"Вы были спасены от превращения в зомби, заняв первое место в рейтинге лучших защитников."
 		"pt"		"Voce foi salvo de virar zumbi por ser o Top 1 no Top Defender."
 	}
 	
@@ -338,6 +388,7 @@
 	{
 		"#format"	"{1:N}"
 		"en"		"{green}{1}{default} was saved from becoming a zombie by being Top 1 in Top Defender."
+		"ru"		"{green} {1} {default} спасся от зомби, заняв первое место в рейтинге лучших защитников."
 		"pt"		"{green}{1}{default} foi salvo de virar zumbi por ser o Top 1 no Top Defender."
 	}
 
@@ -345,6 +396,7 @@
 		{
 		"#format"	"{1:d}"
 		"en"		"You have earned {1} points for being Top One in this round!"
+		"ru"		"Вы заработали {1} баллов, заняв первое место в этом раунде!"
 		"pt"		"Você Ganhou {1} pontos por ser Top One desta rodada!"
 	}
 }
