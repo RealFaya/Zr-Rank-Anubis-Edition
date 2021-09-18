@@ -57,8 +57,8 @@
 	"Kill Zombie Flash"
 	{
 		"#format"	"{1:d}"
-		"en"		"You won {1} point(s) by killing a zombie with a С!"
-		"ru"		"Вы заработали {1} очка (ов), убив зомби с помощью С!"
+		"en"		"You won {1} point(s) by killing a zombie with a flashbang!"
+		"ru"		"Вы заработали {1} очка (ов), убив зомби с помощью световой гранаты!"
 		"pt"		"Ganhaste {1} ponto(s) por matar um zombie com uma flashbang!"
 	}
 
