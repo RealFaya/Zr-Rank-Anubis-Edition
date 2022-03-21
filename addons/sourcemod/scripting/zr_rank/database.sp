@@ -1,4 +1,4 @@
-public int OnSQLConnect(Handle owner, Handle hndl, char [] error, any data)
+int OnSQLConnect(Handle owner, Handle hndl, char [] error, any data)
 {
 	if(hndl == INVALID_HANDLE)
 	{
@@ -23,16 +23,21 @@ public int OnSQLConnect(Handle owner, Handle hndl, char [] error, any data)
 	}
 }
 
-public int OnSQLConnectCallback(Handle owner, Handle hndl, char [] error, any data)
+int OnSQLConnectCallback(Handle owner, Handle hndl, char [] error, any data)
 {
 	if(hndl == INVALID_HANDLE)
 	{
 		LogError("Query failure: %s", error);
 		return;
 	}
-	
+
+	g_bLoaded = true;
+
+	Call_StartForward(g_hOnLoaded);
+	Call_Finish();
+
 	DeletePlayerData();
-	
+
 	for(int client = 1; client <= MaxClients; client++)
 	{
 		if(IsClientInGame(client))
@@ -42,7 +47,7 @@ public int OnSQLConnectCallback(Handle owner, Handle hndl, char [] error, any da
 	}
 }
 
-public void SQL_LoadPlayerCallback(Handle DB, Handle results, const char[] error, any client)
+void SQL_LoadPlayerCallback(Handle DB, Handle results, const char[] error, any client)
 {
 	if(!IsClientInGame(client) || IsFakeClient(client))
 	{
@@ -71,9 +76,14 @@ public void SQL_LoadPlayerCallback(Handle DB, Handle results, const char[] error
 		FormatEx(insert, sizeof(insert), "INSERT INTO zrank (SteamID , playername, points, human_infects, zombie_kills, roundwins_zombie, roundwins_human, time) VALUES ('%s', '%s', %d, 0, 0, 0, 0, %d);", g_ZR_Rank_SteamID[client], playername, g_ZR_Rank_StartPoints, GetTime());
 		SQL_TQuery(db, SQL_NothingCallback, insert);
 	}
+
+	Call_StartForward(g_hOnClientLoaded);
+	Call_PushCell(client);
+	Call_PushCell(g_ZR_Rank_Points[client]);
+	Call_Finish();
 }
 
-public void SQL_NothingCallback(Handle owner, Handle hndl, const char[] error, any client)
+void SQL_NothingCallback(Handle owner, Handle hndl, const char[] error, any client)
 {
 	if (hndl == INVALID_HANDLE)
 	{
@@ -82,7 +92,7 @@ public void SQL_NothingCallback(Handle owner, Handle hndl, const char[] error, a
 	}
 }
 
-public void SQL_GetRank(Handle DB, Handle results, const char[] error, any data)
+void SQL_GetRank(Handle DB, Handle results, const char[] error, any data)
 {
 	int client, i = 0;
 	
@@ -114,7 +124,7 @@ public void SQL_GetRank(Handle DB, Handle results, const char[] error, any data)
 	}
 }
 
-public void SQL_GetTop(Handle DB, Handle results, const char[] error, any data)
+void SQL_GetTop(Handle DB, Handle results, const char[] error, any data)
 {
 	int client;
 	
@@ -150,7 +160,7 @@ public void SQL_GetTop(Handle DB, Handle results, const char[] error, any data)
 	menu.Display(client, 0);
 }
 
-public void SQL_GetTopZombieKills(Handle DB, Handle results, const char[] error, any data)
+void SQL_GetTopZombieKills(Handle DB, Handle results, const char[] error, any data)
 {
 	int client;
 	
@@ -186,7 +196,7 @@ public void SQL_GetTopZombieKills(Handle DB, Handle results, const char[] error,
 	menu.Display(client, 0);
 }
 
-public void SQL_GetTopInfectedHumans(Handle DB, Handle results, const char[] error, any data)
+void SQL_GetTopInfectedHumans(Handle DB, Handle results, const char[] error, any data)
 {
 	int client;
 	
@@ -223,7 +233,7 @@ public void SQL_GetTopInfectedHumans(Handle DB, Handle results, const char[] err
 	menu.Display(client, 0);
 }
 
-public void SQL_GetTopWinRounds_Human(Handle DB, Handle results, const char[] error, any data)
+void SQL_GetTopWinRounds_Human(Handle DB, Handle results, const char[] error, any data)
 {
 	int client;
 	
@@ -260,7 +270,7 @@ public void SQL_GetTopWinRounds_Human(Handle DB, Handle results, const char[] er
 	menu.Display(client, 0);
 }
 
-public void SQL_GetTopWinRounds_Zombie(Handle DB, Handle results, const char[] error, any data)
+void SQL_GetTopWinRounds_Zombie(Handle DB, Handle results, const char[] error, any data)
 {
 	int client;
 	

@@ -106,3 +106,10 @@ int Top_Rank_Dmg[MAXPLAYERS+1];
 
 // Check if it is MySQL that you set on the databases.cfg
 bool IsMySql;
+
+
+bool g_bLoaded;
+
+Handle g_hOnLoaded;
+Handle g_hOnClientLoaded;
+Handle g_hOnClientPointChange;

@@ -1,9 +1,9 @@
-public void Top_Defenders_Event_RoundStart()
+void Top_Defenders_Event_RoundStart()
 {
 	Top_Rank_Reset();
 }
 
-public void Top_Defenders_OnClientDisconnect_Post(int client)
+void Top_Defenders_OnClientDisconnect_Post(int client)
 {
 	if(!g_ZR_Rank_Defenders_Enabled) return;
 	Top_Rank_Dmg[client] = 0;
@@ -17,7 +17,7 @@ public void Top_Defenders_OnClientDisconnect_Post(int client)
 	}
 }
 
-public void Top_Defenders_OnClientConnect_Post(int client)
+void Top_Defenders_OnClientConnect_Post(int client)
 {
 	if(!g_ZR_Rank_Defenders_Enabled) return;
 	Top_Rank_Dmg[client] = 0;
@@ -25,7 +25,7 @@ public void Top_Defenders_OnClientConnect_Post(int client)
 	ClientImuneTemp[client] = false;
 }
 
-public void Top_Rank_Reset()
+void Top_Rank_Reset()
 {
 	for (int i = 1; i <= MaxClients; i++)
 	{	
@@ -33,270 +33,285 @@ public void Top_Rank_Reset()
 	}
 }
 
-public void Top_Defenders_Event_RoundEnd()
+void Top_Defenders_Event_RoundEnd()
 {
-	if(!g_ZR_Rank_Defenders_Enabled || g_ZR_Rank_NumPlayers < g_ZR_Rank_MinPlayers) return;
-
-	if (g_ZR_Rank_Defenders_Save_Enable) ResetImune();
-	int TopOne, TopTwo, TopThree, TopFour, TopFive;
-	char TopHudMessage[512];
-
-	for (int i = 1; i <= MaxClients; i++)
+	if(!g_ZR_Rank_Defenders_Enabled || g_ZR_Rank_NumPlayers < g_ZR_Rank_MinPlayers)
 	{
-		if (IsClientInGame(i) && Top_Rank_Dmg[i] >= Top_Rank_Dmg[TopOne] && Top_Rank_Dmg[i] >= g_ZR_Rank_Minium_Damage && g_ZR_Rank_Defenders_Top_List  >= 1)
+		return;
+	}
+
+	int iTop[5];
+
+	static char TopHudMessage[512];
+
+	if(g_ZR_Rank_Defenders_Save_Enable)
+	{
+		ResetImune();
+	}
+
+	for(int i = 1; i <= MaxClients; i++)
+	{
+		if(IsClientInGame(i) && Top_Rank_Dmg[i] >= Top_Rank_Dmg[iTop[0]] && Top_Rank_Dmg[i] >= g_ZR_Rank_Minium_Damage && g_ZR_Rank_Defenders_Top_List  >= 1)
 		{
-			TopOne = i;
+			iTop[0] = i;
 		}
 	}
 	for (int i = 1; i <= MaxClients; i++)
 	{
-		if (i != TopOne && IsClientInGame(i) && Top_Rank_Dmg[i] >= Top_Rank_Dmg[TopTwo] && Top_Rank_Dmg[i] >= g_ZR_Rank_Minium_Damage && g_ZR_Rank_Defenders_Top_List  >= 2)
+		if(i != iTop[0] && IsClientInGame(i) && Top_Rank_Dmg[i] >= Top_Rank_Dmg[iTop[1]] && Top_Rank_Dmg[i] >= g_ZR_Rank_Minium_Damage && g_ZR_Rank_Defenders_Top_List  >= 2)
 		{		   
-			TopTwo = i;
+			iTop[1] = i;
 		}
 	}	  
 	for (int i = 1; i <= MaxClients; i++)
 	{
-		if (i != TopOne && i != TopTwo && IsClientInGame(i) && Top_Rank_Dmg[i] >= Top_Rank_Dmg[TopThree] && Top_Rank_Dmg[i] >= g_ZR_Rank_Minium_Damage && g_ZR_Rank_Defenders_Top_List  >= 3)
+		if(i != iTop[0] && i != iTop[1] && IsClientInGame(i) && Top_Rank_Dmg[i] >= Top_Rank_Dmg[iTop[2]] && Top_Rank_Dmg[i] >= g_ZR_Rank_Minium_Damage && g_ZR_Rank_Defenders_Top_List  >= 3)
 		{
-			TopThree = i;
+			iTop[2] = i;
 		}
 	}
 	for (int i = 1; i <= MaxClients; i++)
 	{
-		if (i != TopOne && i != TopTwo && i != TopThree && IsClientInGame(i) && Top_Rank_Dmg[i] >= Top_Rank_Dmg[TopFour] && Top_Rank_Dmg[i] >= g_ZR_Rank_Minium_Damage && g_ZR_Rank_Defenders_Top_List  >= 4)
+		if(i != iTop[0] && i != iTop[1] && i != iTop[2] && IsClientInGame(i) && Top_Rank_Dmg[i] >= Top_Rank_Dmg[iTop[3]] && Top_Rank_Dmg[i] >= g_ZR_Rank_Minium_Damage && g_ZR_Rank_Defenders_Top_List  >= 4)
 		{
-			TopFour = i;
+			iTop[3] = i;
 		}
 	}
 	for (int i = 1; i <= MaxClients; i++)
 	{
-		if (i != TopOne && i != TopTwo && i != TopThree && i != TopFour && IsClientInGame(i) && Top_Rank_Dmg[i] >= Top_Rank_Dmg[TopFive] && Top_Rank_Dmg[i] >= g_ZR_Rank_Minium_Damage && g_ZR_Rank_Defenders_Top_List  >= 5)
+		if(i != iTop[0] && i != iTop[1] && i != iTop[2] && i != iTop[3] && IsClientInGame(i) && Top_Rank_Dmg[i] >= Top_Rank_Dmg[iTop[4]] && Top_Rank_Dmg[i] >= g_ZR_Rank_Minium_Damage && g_ZR_Rank_Defenders_Top_List  >= 5)
 		{
-			TopFive = i;
+			iTop[4] = i;
 		}
 	}
-	
-	char top1[512];
-	Format(top1,sizeof(top1), "- Rank Top Defenders -\n1. %N - %i Dmg.", TopOne, Top_Rank_Dmg[TopOne]);
-	
-	char top2[512];
-	Format(top2,sizeof(top2), "- Rank Top Defenders -\n1. %N - %i Dmg.\n2. %N - %i Dmg.", TopOne, Top_Rank_Dmg[TopOne], TopTwo, Top_Rank_Dmg[TopTwo]);
-	
-	char top3[512];
-	Format(top3,sizeof(top3), "- Rank Top Defenders -\n1. %N - %i Dmg.\n2. %N - %i Dmg.\n3. %N - %i Dmg.", TopOne, Top_Rank_Dmg[TopOne], TopTwo, Top_Rank_Dmg[TopTwo], TopThree, Top_Rank_Dmg[TopThree]);
-	
-	char top4[512];
-	Format(top4,sizeof(top4), "- Rank Top Defenders -\n1. %N - %i Dmg.\n2. %N - %i Dmg.\n3. %N - %i Dmg.\n4. %N - %i Dmg.", TopOne, Top_Rank_Dmg[TopOne], TopTwo, Top_Rank_Dmg[TopTwo], TopThree, Top_Rank_Dmg[TopThree], TopFour, Top_Rank_Dmg[TopFour]);
-	
-	char top5[512];
-	Format(top5,sizeof(top5), "- Rank Top Defenders -\n1. %N - %i Dmg.\n2. %N - %i Dmg.\n3. %N - %i Dmg.\n4. %N - %i Dmg.\n5. %N - %i Dmg.", TopOne, Top_Rank_Dmg[TopOne], TopTwo, Top_Rank_Dmg[TopTwo], TopThree, Top_Rank_Dmg[TopThree], TopFour, Top_Rank_Dmg[TopFour], TopFive, Top_Rank_Dmg[TopFive]);
-	
-	if(Top_Rank_Dmg[TopFive]>=5)
-	{ 
-		for (int client = 1; client <= MaxClients; client++)
-		{
-			if (client == 0)
-				return;
 
-			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
-			{
-				SetGlobalTransTarget(client);
-				if (Top_Rank_Dmg[client] >= 1)
-				{
-					Format(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", top5, "You Points", client, Top_Rank_Dmg[client]);
-					SendHudTopRankMsg(client, TopHudMessage);
-				}
-				else
-				{
-					Format(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", top5, "You haven t done any damage");
-					SendHudTopRankMsg(client, TopHudMessage);
-				}
-			}
-		}
-		if (g_ZR_Rank_Defenders_Save_Enable) ClientImune[TopOne] = true;
+	static char szTop[512];
 
-		CPrintToChatAll("%t", "top_header");
-		CPrintToChatAll("%t", "top_winner", 1, TopOne, Top_Rank_Dmg[TopOne]);
-		CPrintToChatAll("%t", "top_nonwinner", 2, TopTwo, Top_Rank_Dmg[TopTwo]);
-		CPrintToChatAll("%t", "top_nonwinner", 3, TopThree, Top_Rank_Dmg[TopThree]);
-		CPrintToChatAll("%t", "top_nonwinner", 4, TopFour, Top_Rank_Dmg[TopFour]);
-		CPrintToChatAll("%t", "top_nonwinner", 5, TopFive, Top_Rank_Dmg[TopFive]);
-		CPrintToChatAll("%t", "top_footer");
-
-		if(g_ZR_Rank_Top1_Point > 0)
-		{
-			g_ZR_Rank_Points[TopOne] += g_ZR_Rank_Top1_Point;
-			CPrintToChat(TopOne, "%s %t", g_ZR_Rank_Prefix, "Top One Point", g_ZR_Rank_Top1_Point);
-		}
-	} 
-	else if(Top_Rank_Dmg[TopFour]>=5)
-	{ 
-		for (int client = 1; client <= MaxClients; client++)
-		{
-			if (client == 0)
-				return;
-
-			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
-			{
-				SetGlobalTransTarget(client);
-				if (Top_Rank_Dmg[client] >= 1)
-				{
-					Format(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", top4, "You Points", client, Top_Rank_Dmg[client]);
-					SendHudTopRankMsg(client, TopHudMessage);
-				}
-				else
-				{
-					Format(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", top4, "You haven t done any damage");
-					SendHudTopRankMsg(client, TopHudMessage);
-				}
-			}
-		}
-		if (g_ZR_Rank_Defenders_Save_Enable) ClientImune[TopOne] = true;
-
-		CPrintToChatAll("%t", "top_header");
-		CPrintToChatAll("%t", "top_winner", 1, TopOne, Top_Rank_Dmg[TopOne]);
-		CPrintToChatAll("%t", "top_nonwinner", 2, TopTwo, Top_Rank_Dmg[TopTwo]);
-		CPrintToChatAll("%t", "top_nonwinner", 3, TopThree, Top_Rank_Dmg[TopThree]);
-		CPrintToChatAll("%t", "top_nonwinner", 4, TopFour, Top_Rank_Dmg[TopFour]);
-		CPrintToChatAll("%t", "top_footer");
-
-		if(g_ZR_Rank_Top1_Point > 0)
-		{
-			g_ZR_Rank_Points[TopOne] += g_ZR_Rank_Top1_Point;
-			CPrintToChat(TopOne, "%s %t", g_ZR_Rank_Prefix, "Top One Point", g_ZR_Rank_Top1_Point);
-		}
-	} 
-	else if(Top_Rank_Dmg[TopThree]>=5)
-	{ 
-		for (int client = 1; client <= MaxClients; client++)
-		{
-			if (client == 0)
-				return;
-
-			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
-			{
-				SetGlobalTransTarget(client);
-				if (Top_Rank_Dmg[client] >= 1)
-				{
-					Format(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", top3, "You Points", client, Top_Rank_Dmg[client]);
-					SendHudTopRankMsg(client, TopHudMessage);
-				}
-				else
-				{
-					Format(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", top3, "You haven t done any damage");
-					SendHudTopRankMsg(client, TopHudMessage);
-				}
-			}
-		}
-		if (g_ZR_Rank_Defenders_Save_Enable) ClientImune[TopOne] = true;
-
-		CPrintToChatAll("%t", "top_header");
-		CPrintToChatAll("%t", "top_winner", 1, TopOne, Top_Rank_Dmg[TopOne]);
-		CPrintToChatAll("%t", "top_nonwinner", 2, TopTwo, Top_Rank_Dmg[TopTwo]);
-		CPrintToChatAll("%t", "top_nonwinner", 3, TopThree, Top_Rank_Dmg[TopThree]);
-		CPrintToChatAll("%t", "top_footer");
-
-		if(g_ZR_Rank_Top1_Point > 0)
-		{
-			g_ZR_Rank_Points[TopOne] += g_ZR_Rank_Top1_Point;
-			CPrintToChat(TopOne, "%s %t", g_ZR_Rank_Prefix, "Top One Point", g_ZR_Rank_Top1_Point);
-		}
-	} 
-	else if(Top_Rank_Dmg[TopTwo]>=5)
-	{ 
-		for (int client = 1; client <= MaxClients; client++)
-		{
-			if (client == 0)
-				return;
-
-			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
-			{
-				SetGlobalTransTarget(client);
-				if (Top_Rank_Dmg[client] >= 1)
-				{
-					Format(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", top2, "You Points", client, Top_Rank_Dmg[client]);
-					SendHudTopRankMsg(client, TopHudMessage);
-				}
-				else
-				{
-					Format(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", top2, "You haven t done any damage");
-					SendHudTopRankMsg(client, TopHudMessage);
-				}
-			}
-		}
-		if (g_ZR_Rank_Defenders_Save_Enable) ClientImune[TopOne] = true;
-
-		CPrintToChatAll("%t", "top_header");
-		CPrintToChatAll("%t", "top_winner", 1, TopOne, Top_Rank_Dmg[TopOne]);
-		CPrintToChatAll("%t", "top_nonwinner", 2, TopTwo, Top_Rank_Dmg[TopTwo]);
-		CPrintToChatAll("%t", "top_footer");
-
-		if(g_ZR_Rank_Top1_Point > 0)
-		{
-			g_ZR_Rank_Points[TopOne] += g_ZR_Rank_Top1_Point;
-			CPrintToChat(TopOne, "%s %t", g_ZR_Rank_Prefix, "Top One Point", g_ZR_Rank_Top1_Point);
-		}
-	} 
-	else if(Top_Rank_Dmg[TopOne]>=5)
+	if(Top_Rank_Dmg[iTop[4]] >= 5)
 	{
-		for (int client = 1; client <= MaxClients; client++)
-		{
-			if (client == 0)
-				return;
+		FormatEx(szTop, sizeof szTop, "- Rank Top Defenders -\n1. %N - %i Dmg.\n2. %N - %i Dmg.\n3. %N - %i Dmg.\n4. %N - %i Dmg.\n5. %N - %i Dmg.", iTop[0], Top_Rank_Dmg[iTop[0]], iTop[1], Top_Rank_Dmg[iTop[1]], iTop[2], Top_Rank_Dmg[iTop[2]], iTop[3], Top_Rank_Dmg[iTop[3]], iTop[4], Top_Rank_Dmg[iTop[4]]);
 
+		for(int client = 1; client <= MaxClients; client++)
+		{
 			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
 			{
 				SetGlobalTransTarget(client);
+
 				if (Top_Rank_Dmg[client] >= 1)
 				{
-					Format(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", top1, "You Points", client, Top_Rank_Dmg[client]);
-					SendHudTopRankMsg(client, TopHudMessage);
+					FormatEx(TopHudMessage, sizeof(TopHudMessage), "%s\n\n%t", szTop, "You Points", client, Top_Rank_Dmg[client]);
 				}
 				else
 				{
-					Format(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", top1, "You haven t done any damage");
-					SendHudTopRankMsg(client, TopHudMessage);
+					FormatEx(TopHudMessage, sizeof(TopHudMessage), "%s\n\n%t", szTop, "You haven t done any damage");
 				}
+
+				SendHudTopRankMsg(client, TopHudMessage);
 			}
 		}
-		if (g_ZR_Rank_Defenders_Save_Enable) ClientImune[TopOne] = true;
+
+		if(g_ZR_Rank_Defenders_Save_Enable)
+		{
+			ClientImune[iTop[0]] = true;
+		}
 
 		CPrintToChatAll("%t", "top_header");
-		CPrintToChatAll("%t", "top_winner", 1, TopOne, Top_Rank_Dmg[TopOne]);
+		CPrintToChatAll("%t", "top_winner", 1, iTop[0], Top_Rank_Dmg[iTop[0]]);
+		CPrintToChatAll("%t", "top_nonwinner", 2, iTop[1], Top_Rank_Dmg[iTop[1]]);
+		CPrintToChatAll("%t", "top_nonwinner", 3, iTop[2], Top_Rank_Dmg[iTop[2]]);
+		CPrintToChatAll("%t", "top_nonwinner", 4, iTop[3], Top_Rank_Dmg[iTop[3]]);
+		CPrintToChatAll("%t", "top_nonwinner", 5, iTop[4], Top_Rank_Dmg[iTop[4]]);
 		CPrintToChatAll("%t", "top_footer");
 
 		if(g_ZR_Rank_Top1_Point > 0)
 		{
-			g_ZR_Rank_Points[TopOne] += g_ZR_Rank_Top1_Point;
-			CPrintToChat(TopOne, "%s %t", g_ZR_Rank_Prefix, "Top One Point", g_ZR_Rank_Top1_Point);
+			g_ZR_Rank_Points[iTop[0]] += g_ZR_Rank_Top1_Point;
+			CPrintToChat(iTop[0], "%s %t", g_ZR_Rank_Prefix, "Top One Point", g_ZR_Rank_Top1_Point);
+		}
+	} 
+	else if(Top_Rank_Dmg[iTop[3]]>=5)
+	{
+		FormatEx(szTop, sizeof szTop, "- Rank Top Defenders -\n1. %N - %i Dmg.\n2. %N - %i Dmg.\n3. %N - %i Dmg.\n4. %N - %i Dmg.", iTop[0], Top_Rank_Dmg[iTop[0]], iTop[1], Top_Rank_Dmg[iTop[1]], iTop[2], Top_Rank_Dmg[iTop[2]], iTop[3], Top_Rank_Dmg[iTop[3]]);
+
+		for(int client = 1; client <= MaxClients; client++)
+		{
+			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
+			{
+				SetGlobalTransTarget(client);
+
+				if (Top_Rank_Dmg[client] >= 1)
+				{
+					FormatEx(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", szTop, "You Points", client, Top_Rank_Dmg[client]);
+				}
+				else
+				{
+					FormatEx(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", szTop, "You haven t done any damage");
+				}
+
+				SendHudTopRankMsg(client, TopHudMessage);
+			}
+		}
+
+		if(g_ZR_Rank_Defenders_Save_Enable)
+		{
+			ClientImune[iTop[0]] = true;
+		}
+
+		CPrintToChatAll("%t", "top_header");
+		CPrintToChatAll("%t", "top_winner", 1, iTop[0], Top_Rank_Dmg[iTop[0]]);
+		CPrintToChatAll("%t", "top_nonwinner", 2, iTop[1], Top_Rank_Dmg[iTop[1]]);
+		CPrintToChatAll("%t", "top_nonwinner", 3, iTop[2], Top_Rank_Dmg[iTop[2]]);
+		CPrintToChatAll("%t", "top_nonwinner", 4, iTop[3], Top_Rank_Dmg[iTop[3]]);
+		CPrintToChatAll("%t", "top_footer");
+
+		if(g_ZR_Rank_Top1_Point > 0)
+		{
+			g_ZR_Rank_Points[iTop[0]] += g_ZR_Rank_Top1_Point;
+			CPrintToChat(iTop[0], "%s %t", g_ZR_Rank_Prefix, "Top One Point", g_ZR_Rank_Top1_Point);
+		}
+	} 
+	else if(Top_Rank_Dmg[iTop[2]]>=5)
+	{
+		FormatEx(szTop, sizeof szTop, "- Rank Top Defenders -\n1. %N - %i Dmg.\n2. %N - %i Dmg.\n3. %N - %i Dmg.", iTop[0], Top_Rank_Dmg[iTop[0]], iTop[1], Top_Rank_Dmg[iTop[1]], iTop[2], Top_Rank_Dmg[iTop[2]]);
+
+		for(int client = 1; client <= MaxClients; client++)
+		{
+			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
+			{
+				SetGlobalTransTarget(client);
+
+				if (Top_Rank_Dmg[client] >= 1)
+				{
+					FormatEx(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", szTop, "You Points", client, Top_Rank_Dmg[client]);
+				}
+				else
+				{
+					FormatEx(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", szTop, "You haven t done any damage");
+				}
+
+				SendHudTopRankMsg(client, TopHudMessage);
+			}
+		}
+
+		if(g_ZR_Rank_Defenders_Save_Enable)
+		{
+			ClientImune[iTop[0]] = true;
+		}
+
+		CPrintToChatAll("%t", "top_header");
+		CPrintToChatAll("%t", "top_winner", 1, iTop[0], Top_Rank_Dmg[iTop[0]]);
+		CPrintToChatAll("%t", "top_nonwinner", 2, iTop[1], Top_Rank_Dmg[iTop[1]]);
+		CPrintToChatAll("%t", "top_nonwinner", 3, iTop[2], Top_Rank_Dmg[iTop[2]]);
+		CPrintToChatAll("%t", "top_footer");
+
+		if(g_ZR_Rank_Top1_Point > 0)
+		{
+			g_ZR_Rank_Points[iTop[0]] += g_ZR_Rank_Top1_Point;
+			CPrintToChat(iTop[0], "%s %t", g_ZR_Rank_Prefix, "Top One Point", g_ZR_Rank_Top1_Point);
+		}
+	} 
+	else if(Top_Rank_Dmg[iTop[1]]>=5)
+	{
+		FormatEx(szTop, sizeof szTop, "- Rank Top Defenders -\n1. %N - %i Dmg.\n2. %N - %i Dmg.", iTop[0], Top_Rank_Dmg[iTop[0]], iTop[1], Top_Rank_Dmg[iTop[1]]);
+
+		for(int client = 1; client <= MaxClients; client++)
+		{
+			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
+			{
+				SetGlobalTransTarget(client);
+
+				if (Top_Rank_Dmg[client] >= 1)
+				{
+					FormatEx(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", szTop, "You Points", client, Top_Rank_Dmg[client]);
+				}
+				else
+				{
+					FormatEx(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", szTop, "You haven t done any damage");
+				}
+
+				SendHudTopRankMsg(client, TopHudMessage);
+			}
+		}
+
+		if(g_ZR_Rank_Defenders_Save_Enable)
+		{
+			ClientImune[iTop[0]] = true;
+		}
+
+		CPrintToChatAll("%t", "top_header");
+		CPrintToChatAll("%t", "top_winner", 1, iTop[0], Top_Rank_Dmg[iTop[0]]);
+		CPrintToChatAll("%t", "top_nonwinner", 2, iTop[1], Top_Rank_Dmg[iTop[1]]);
+		CPrintToChatAll("%t", "top_footer");
+
+		if(g_ZR_Rank_Top1_Point > 0)
+		{
+			g_ZR_Rank_Points[iTop[0]] += g_ZR_Rank_Top1_Point;
+			CPrintToChat(iTop[0], "%s %t", g_ZR_Rank_Prefix, "Top One Point", g_ZR_Rank_Top1_Point);
+		}
+	} 
+	else if(Top_Rank_Dmg[iTop[0]]>=5)
+	{
+		FormatEx(szTop ,sizeof szTop, "- Rank Top Defenders -\n1. %N - %i Dmg.", iTop[0], Top_Rank_Dmg[iTop[0]]);
+
+		for(int client = 1; client <= MaxClients; client++)
+		{
+			if(IsClientInGame(client) && !IsFakeClient(client) && g_ZR_Rank_Defenders_Hud_Enabled)
+			{
+				SetGlobalTransTarget(client);
+
+				if (Top_Rank_Dmg[client] >= 1)
+				{
+					FormatEx(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", szTop, "You Points", client, Top_Rank_Dmg[client]);
+				}
+				else
+				{
+					FormatEx(TopHudMessage,sizeof(TopHudMessage), "%s\n\n%t", szTop, "You haven t done any damage");
+				}
+
+				SendHudTopRankMsg(client, TopHudMessage);
+			}
+		}
+
+		if(g_ZR_Rank_Defenders_Save_Enable)
+		{
+			ClientImune[iTop[0]] = true;
+		}
+
+		CPrintToChatAll("%t", "top_header");
+		CPrintToChatAll("%t", "top_winner", 1, iTop[0], Top_Rank_Dmg[iTop[0]]);
+		CPrintToChatAll("%t", "top_footer");
+
+		if(g_ZR_Rank_Top1_Point > 0)
+		{
+			g_ZR_Rank_Points[iTop[0]] += g_ZR_Rank_Top1_Point;
+			CPrintToChat(iTop[0], "%s %t", g_ZR_Rank_Prefix, "Top One Point", g_ZR_Rank_Top1_Point);
 		}
 	}
+
 	Top_Rank_Reset();
 }
 
 stock void SendHudTopRankMsg(int client, const char[] topMessage, any...)
 {
-	if (!IsValidClient(client, true, false))
-	return;
-
-	int entranktop = CreateEntityByName("game_text");
-	DispatchKeyValue(entranktop, "channel", "3");
-	DispatchKeyValue(entranktop, "color", Zr_ColorValue);
-	DispatchKeyValue(entranktop, "color2", "0 0 0");
-	DispatchKeyValue(entranktop, "effect", "0");
-	DispatchKeyValue(entranktop, "fadein", "1.5");
-	DispatchKeyValue(entranktop, "fadeout", "0.5");
-	DispatchKeyValue(entranktop, "fxtime", "0.25"); 		
-	DispatchKeyValue(entranktop, "holdtime", "10.0");
-	DispatchKeyValue(entranktop, "message", topMessage);
-	DispatchKeyValue(entranktop, "spawnflags", "0"); 	
-	DispatchKeyValue(entranktop, "x", HudTopPosX);
-	DispatchKeyValue(entranktop, "y", HudTopPosY); 		
-	DispatchSpawn(entranktop);
-	SetVariantString("!activator");
-	AcceptEntityInput(entranktop,"display",client);
-	return;
+	if(IsValidClient(client, true, false))
+	{
+		int entranktop = CreateEntityByName("game_text");
+		DispatchKeyValue(entranktop, "channel", "3");
+		DispatchKeyValue(entranktop, "color", Zr_ColorValue);
+		DispatchKeyValue(entranktop, "color2", "0 0 0");
+		DispatchKeyValue(entranktop, "effect", "0");
+		DispatchKeyValue(entranktop, "fadein", "1.5");
+		DispatchKeyValue(entranktop, "fadeout", "0.5");
+		DispatchKeyValue(entranktop, "fxtime", "0.25"); 		
+		DispatchKeyValue(entranktop, "holdtime", "10.0");
+		DispatchKeyValue(entranktop, "message", topMessage);
+		DispatchKeyValue(entranktop, "spawnflags", "0"); 	
+		DispatchKeyValue(entranktop, "x", HudTopPosX);
+		DispatchKeyValue(entranktop, "y", HudTopPosY); 		
+		DispatchSpawn(entranktop);
+		SetVariantString("!activator");
+		AcceptEntityInput(entranktop,"display",client);
+	}
 }
 
 stock void HudSave(int client)
@@ -310,6 +325,7 @@ stock void HudSave(int client)
 		{
 			EmitSoundToClientAny(client, g_ZR_Rank_Save_Sound, SOUND_FROM_PLAYER, SNDCHAN_AUTO);
 		}
+
 		int entsavetop = CreateEntityByName("game_text");
 		DispatchKeyValue(entsavetop, "channel", "3");
 		DispatchKeyValue(entsavetop, "color", Zr_ColorValue);
@@ -327,44 +343,56 @@ stock void HudSave(int client)
 		SetVariantString("!activator");
 		AcceptEntityInput(entsavetop,"display",client);
 	}
-	return;
 }
 
 stock void ResetImune()
 {
 	for(int client = 1; client <= MaxClients; client++)
-			ClientImune[client] = false;
+	{
+		ClientImune[client] = false;
+	}
 }
 
 stock void ResetImuneTemp()
 {
 	for(int client = 1; client <= MaxClients; client++)
-			ClientImuneTemp[client] = false;
+	{
+		ClientImuneTemp[client] = false;
+	}
 }
 
 public Action ZR_OnClientInfect(int &client, int &attacker, bool &motherInfect, bool &respawnOverride, bool &respawn)
 {
-	if (ClientImune[client] && g_ZR_Rank_Defenders_Save_Enable)
+	if(g_ZR_Rank_Defenders_Save_Enable)
 	{
-		CPrintToChatAll("%s %t", g_ZR_Rank_Prefix, "Chat were saved", client);
-		CreateTimer(0.1, InfectSubstitute, client);
-		return Plugin_Handled;
+		if(ClientImune[client])
+		{
+			CPrintToChatAll("%s %t", g_ZR_Rank_Prefix, "Chat were saved", client);
+			CreateTimer(0.1, InfectSubstitute, client);
+
+			return Plugin_Handled;
+		}
+
+		if(motherInfect)
+		{
+			ClientImuneTemp[client] = true;
+		}
+
+		ResetImune();
 	}
-	if(motherInfect && g_ZR_Rank_Defenders_Save_Enable)
-	{
-		ClientImuneTemp[client] = true;
-	}
-	if (g_ZR_Rank_Defenders_Save_Enable) ResetImune();
+
 	return Plugin_Continue;
 }
 
-public Action InfectSubstitute(Handle timer, any value)
+Action InfectSubstitute(Handle timer, any value)
 {	
-	if(g_ZR_Rank_NumPlayers < g_ZR_Rank_MinPlayers) return;
-	int client = value;
-	HudSave(client);
-	int counter = GetRandomPlayer();
-	ZR_InfectClient(counter, _,true ,true);
+	if(g_ZR_Rank_NumPlayers < g_ZR_Rank_MinPlayers)
+	{
+		return;
+	}
+
+	HudSave(value);
+	ZR_InfectClient(GetRandomPlayer(), _,true ,true);
 	ResetImune();
 	ResetImuneTemp();
 }
@@ -373,8 +401,14 @@ stock int GetRandomPlayer()
 {
 	int clients[MAXPLAYERS + 1];
 	int clientCount, i;
-	for (i = 1; i <= MaxClients; ++i)
-		if (IsClientInGame(i) && ZR_IsClientHuman(i) && !ClientImune[i])
-		clients[clientCount++] = i;
+
+	for(i = 1; i <= MaxClients; ++i)
+	{
+		if(IsClientInGame(i) && ZR_IsClientHuman(i) && !ClientImune[i])
+		{
+			clients[clientCount++] = i;
+		}
+	}
+
 	return (clientCount == 0) ? -1 : clients[GetRandomInt(0, clientCount-1)];
 }

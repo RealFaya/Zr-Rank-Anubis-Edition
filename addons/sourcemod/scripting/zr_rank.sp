@@ -38,9 +38,9 @@
 public Plugin myinfo =
 {
 	name = "[ZR] Rank",
-	author = "Hallucinogenic Troll, Anubis Edition",
+	author = "Hallucinogenic Troll, Anubis Edition, Faya™ (DS: Faya™#8514)",
 	description = "Rank Specified for Zombie Reloaded or Zombie Plague Servers",
-	version = "1.7-B, Anubis Edition",
+	version = "1.8, Anubis Edition",
 	url = "http://HallucinogenicTrollConfigs.com/"
 };
 
@@ -48,7 +48,7 @@ public void OnPluginStart()
 {
 	// Connection to the database;
 	SQL_TConnect(OnSQLConnect, "zr_rank");
-	
+
 	// ConVars
 	g_CVAR_ZR_Rank_StartPoints 	= CreateConVar("zr_rank_startpoints", "100", "How many points that a new player starts", _, true, 0.0, false);
 	g_CVAR_ZR_Rank_InfectHuman = CreateConVar("zr_rank_infecthuman", "1", "How many points you get when you infect an human (0 will disable it)", _, true, 0.0, false);
@@ -80,13 +80,13 @@ public void OnPluginStart()
 	g_CVAR_ZR_Rank_Hud_Colors = CreateConVar("zr_rank_defenders_hud_colors", "255 255 0", "RGB color value for the hud.");
 	g_CVAR_ZR_Rank_Defenders_Sound  = CreateConVar("zr_rank_defenders_sound", "top/bells.mp3", "Saved from becoming a zombie,Sound.");
 	g_CVAR_ZR_Rank_Top1_Point = CreateConVar("zr_rank_top1_points", "10", "How many points do you earn when and the Top 1 of the Round (0 will disable it) ", _, true, 0.0, false);
-	
+
 	// Events
 	HookEvent("player_hurt", Event_PlayerHurt, EventHookMode_Pre);
 	HookEvent("player_death", Event_PlayerDeath, EventHookMode_Pre);
 	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 	HookEvent("round_start",Event_RoundStart, EventHookMode_PostNoCopy);
-	
+
 	// Normal Commands
 	RegConsoleCmd("sm_rank", Command_Rank, "Shows a player rank in the menu");
 	RegConsoleCmd("sm_mystats", Command_MyStats, "Shows all the stats of a player");
@@ -96,20 +96,19 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_humanwins", Command_TopWinRounds_Human, "Show the Top Players List, order by Round Wins as a Human");
 	RegConsoleCmd("sm_zombiewins", Command_TopWinRounds_Zombie, "Show the Top Players List, order by Round Wins as a Zombie");
 	RegConsoleCmd("sm_resetmyrank", Command_ResetMyRank, "It lets a player reset his rank all by himself");
-	
+
 	// Admin Commands
 	RegAdminCmd("sm_resetrank_all", Command_ResetRank_All, ADMFLAG_ROOT, "Deletes all the players that are in the database");
-	
+
 	// Exec Config
 	AutoExecConfig(true, "zr_rank", "zr_rank");
-	
+
 	// Translations
 	LoadTranslations("zr_rank.phrases");
-	
-	
+
 	// Let's iniciate to 0, just to be sure;
 	g_ZR_Rank_NumPlayers = 0;
-	
+
 	for (int i = 1; i <= MaxClients; i++)
 	{
 		if (IsClientInGame(i))
@@ -126,7 +125,7 @@ public void OnAllPluginsLoaded()
 
 public void OnLibraryRemoved(const char[] name)
 {
-	if (StrEqual(name, "zombiereloaded"))
+	if(StrEqual(name, "zombiereloaded"))
 	{
 		ZombieReloaded = false;
 	}
@@ -134,7 +133,7 @@ public void OnLibraryRemoved(const char[] name)
  
 public void OnLibraryAdded(const char[] name)
 {
-	if (StrEqual(name, "zombiereloaded"))
+	if(StrEqual(name, "zombiereloaded"))
 	{
 		ZombieReloaded = true;
 	}
@@ -178,12 +177,12 @@ public void OnConfigsExecuted()
 
 	ExplodeString(Zr_PosValueA, " ", Zr_StringPosA, sizeof(Zr_StringPosA), sizeof(Zr_StringPosA[]));
 	ExplodeString(Zr_PosValueB, " ", Zr_StringPosB, sizeof(Zr_StringPosB), sizeof(Zr_StringPosB[]));
-	
-	Format(HudSavePosX, sizeof(HudSavePosX), Zr_StringPosA[0]);
-	Format(HudSavePosY, sizeof(HudSavePosY), Zr_StringPosA[1]);
 
-	Format(HudTopPosX, sizeof(HudTopPosX), Zr_StringPosB[0]);
-	Format(HudTopPosY, sizeof(HudTopPosY), Zr_StringPosB[1]);
+	FormatEx(HudSavePosX, sizeof(HudSavePosX), Zr_StringPosA[0]);
+	FormatEx(HudSavePosY, sizeof(HudSavePosY), Zr_StringPosA[1]);
+
+	FormatEx(HudTopPosX, sizeof(HudTopPosX), Zr_StringPosB[0]);
+	FormatEx(HudTopPosY, sizeof(HudTopPosY), Zr_StringPosB[1]);
 
 	g_CVAR_ZR_Rank_Hud_Colors.GetString(Zr_ColorValue, sizeof(Zr_ColorValue));
 
@@ -220,30 +219,30 @@ public void OnClientPostAdminCheck(int client)
 public void OnClientDisconnect(int client)
 {
 	Top_Defenders_OnClientDisconnect_Post(client);
-	
+
 	if(!IsValidClient(client, false, true))
 	{
 		return;
 	}
-	
+
 	g_ZR_Rank_NumPlayers--;
-	
+
 	if(g_ZR_Rank_NumPlayers < g_ZR_Rank_MinPlayers)
 	{
 		CPrintToChatAll("%s %t", g_ZR_Rank_Prefix, "Currently Not Min Players", g_ZR_Rank_MinPlayers);
 	}
-	
+
 	char update[512];
 	char playername[64];
 	GetClientName(client, playername, sizeof(playername));
 	GetClientAuthId(client, AuthId_Steam3, g_ZR_Rank_SteamID[client], sizeof(g_ZR_Rank_SteamID[]));
 	SQL_EscapeString(db, playername, playername, sizeof(playername));
 	FormatEx(update, sizeof(update), "UPDATE  zrank SET playername = '%s', points =  %i , human_infects = %i, zombie_kills = %i, roundwins_zombie = %i, roundwins_human = %i, time = %d WHERE  SteamID = '%s';", playername, g_ZR_Rank_Points[client], g_ZR_Rank_ZombieKills[client], g_ZR_Rank_HumanInfects[client], g_ZR_Rank_RoundWins_Zombie[client], g_ZR_Rank_RoundWins_Human[client], GetTime(), g_ZR_Rank_SteamID[client]);
-	
+
 	SQL_TQuery(db, SQL_NothingCallback, update);
 }
 
-public void DeletePlayerData()
+void DeletePlayerData()
 {
 	char buffer[1024];
 	int now = GetTime();
@@ -251,13 +250,13 @@ public void DeletePlayerData()
 	SQL_TQuery(db, SQL_NothingCallback, buffer);
 }
 
-public void LoadPlayerInfo(int client)
+void LoadPlayerInfo(int client)
 {
-	char buffer[2048];
-
-	GetClientAuthId(client, AuthId_Steam3, g_ZR_Rank_SteamID[client], sizeof(g_ZR_Rank_SteamID[]));
 	if(db != INVALID_HANDLE)
 	{
+		static char buffer[2048];
+
+		GetClientAuthId(client, AuthId_Steam3, g_ZR_Rank_SteamID[client], sizeof(g_ZR_Rank_SteamID[]));
 		FormatEx(buffer, sizeof(buffer), "SELECT * FROM zrank WHERE SteamID = '%s';", g_ZR_Rank_SteamID[client]);
 		SQL_TQuery(db, SQL_LoadPlayerCallback, buffer, client);
 	}
@@ -265,7 +264,7 @@ public void LoadPlayerInfo(int client)
 
 stock void GetRank(int client)
 {
-	char query[255];
+	static char query[255];
 	Format(query, sizeof(query), "SELECT * FROM zrank ORDER BY points DESC;");
 	
 	SQL_TQuery(db, SQL_GetRank, query, GetClientUserId(client));
